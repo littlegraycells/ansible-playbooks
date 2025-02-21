@@ -1,0 +1,6 @@
+- name: Install packages
+  dnf:
+    name:
+      - htop
+      - emacs-nox
+

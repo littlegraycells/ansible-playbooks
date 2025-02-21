@@ -24,3 +24,4 @@
     - name: Install packages
       include_tasks:
         file: tasks/packages-fedora.yml
+        file: tasks/packages-flatpak.yml

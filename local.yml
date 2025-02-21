@@ -3,10 +3,12 @@
   become: true
 
   pre_tasks:
-    - name: Update repositories
+    - name: Update dnf cache
       dnf:
         update_cache: yes
       changed_when: False
 
   tasks:
-    - include: tasks/packages-fedora.yml
+    - name: Install packages
+      include_tasks:
+        file: tasks/packages-fedora.yml

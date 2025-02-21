@@ -1,4 +1,4 @@
 - name: Install flatpak packages
   community.general.flatpak:
-    name: Betterbird
+    name: eu.betterbird.Betterbird
     state: present

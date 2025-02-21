@@ -1,8 +1,8 @@
 - hosts: localhost
   connection: local
-  become: tru
+  become: true
 
-  pre-tasks:
+  pre_tasks:
     - name: Update repositories
       dnf:
         update_cache: yes

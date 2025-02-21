@@ -4,5 +4,5 @@
 
   tasks:
   - name: Install htop
-    apt:
+    dnf:
       name: htop

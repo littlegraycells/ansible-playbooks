@@ -3,6 +3,11 @@
     name:
       - gnome-tweaks
 
+- name: Install GNOME Extensions
+  community.general.flatpak:
+    name:
+      - org.gnome.Extensions
+
 - name: Configure GNOME
   become_user: jeevan
   dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"

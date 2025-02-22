@@ -1,5 +1,2 @@
 - name: Setup GNOME
-  dconf:
-    key: "/org/gnome/desktop/peripherals/touchpad/tap-to-click"
-    value: "false"
-    state: present
+  dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="false"

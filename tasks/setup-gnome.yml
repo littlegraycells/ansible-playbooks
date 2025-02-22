@@ -1,5 +1,6 @@
 - name: Setup GNOME
-  community.general.dconf:
-    key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
+  gconftool2:
+    key: /desktop/peripherals/touchpad/tap-to-click
+    value_type: "bool"
     value: "true"
     state: present

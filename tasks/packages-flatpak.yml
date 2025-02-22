@@ -1,4 +1,6 @@
 - name: Install flatpak packages
   community.general.flatpak:
-    name: eu.betterbird.Betterbird
+    name:
+      - eu.betterbird.Betterbird
+      - org.onlyoffice.desktopeditors
     state: present

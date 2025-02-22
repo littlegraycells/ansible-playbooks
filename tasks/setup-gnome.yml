@@ -12,3 +12,4 @@
   become_user: jeevan
   dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"
   dconf: key="/org/gnome/desktop/peripherals/mouse/natural-scroll" value="true"
+  dconf: key="/org/gnome/desktop/wm/preferences/button-layout" value="'appmenu:minimize,maximize,close'"

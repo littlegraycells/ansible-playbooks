@@ -8,10 +8,11 @@
         update_cache: yes
       changed_when: False
 
-    - name: Install Flatpak
+    - name: Install dnf package dependencies
       dnf:
         name:
           - flatpak
+          - python3-psutil
 
     - name: Add the flathub flatpak repository remote to the user installation
       community.general.flatpak_remote:
@@ -25,3 +26,4 @@
       include_tasks:
         file: tasks/packages-fedora.yml
         file: tasks/packages-flatpak.yml
+        file: tasks/setup-gnome.yml

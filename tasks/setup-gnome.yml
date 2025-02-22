@@ -1,15 +1,27 @@
-- name: Install GNOME Tweaks
+- name: Install GNOME Tweaks app
   dnf:
     name:
       - gnome-tweaks
 
-- name: Install GNOME Extensions
+- name: Install GNOME Extensions app
   community.general.flatpak:
     name:
       - org.gnome.Extensions
 
+- name: Install GNOME Extensions
+  become: true
+  package:
+    name:
+      - gnome-shell-extension-dash-to-dock
+
+- name: Enable extensions
+  dconf:
+    key: "/org/gnome/shell/enabled-extensions"
+    value: "['dash-to-dock@micxgx@gmail.com']"
+    
 - name: Configure GNOME
   become_user: jeevan
   dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"
   dconf: key="/org/gnome/desktop/peripherals/mouse/natural-scroll" value="true"
   dconf: key="/org/gnome/desktop/wm/preferences/button-layout" value="'appmenu:minimize,maximize,close'"
+  dconf: key="/org/gnome/mutter/center-new-windows" value="true"

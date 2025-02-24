@@ -18,7 +18,7 @@
   become_user: jeevan
   dconf:
     key: "/org/gnome/shell/enabled-extensions"
-    value: "['dash-to-dock@micxgx@gmail.com']"
+    value: "['dash-to-dock@micxgx.gmail.com']"
     
 - name: Configure GNOME
   become_user: jeevan

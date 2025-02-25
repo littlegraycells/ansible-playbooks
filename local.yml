@@ -31,6 +31,4 @@
         file: tasks/packages-flatpak.yml
         file: tasks/setup-gnome.yml
 
-    - name: Unconditionally reboot the machine with all defaults
-      ansible.builtin.reboot:
 

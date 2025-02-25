@@ -8,17 +8,39 @@
     name:
       - org.gnome.Extensions
 
-- name: Install GNOME Extensions
+- name: Install Extensions
   become: true
   package:
     name:
       - gnome-shell-extension-dash-to-dock
 
-- name: Enable extensions
-  become_user: jeevan
-  dconf:
-    key: "/org/gnome/shell/enabled-extensions"
-    value: "['dash-to-dock@micxgx.gmail.com']"
+- name: Remove extension(s) from disabled-extensions (read values)
+  ansible.builtin.command:
+    cmd: "dconf read /org/gnome/shell/disabled-extensions"
+  register: current_values
+
+- name: Remove extension(s) from disabled-extensions (remove values)
+  set_fact:
+    values_to_remove: ['dash-to-dock@micxgx.gmail.com']
+    updated_values: "{{ current_values.stdout.split('\n') | select('match', '.*') | list | selectattr('!', 'in', values_to_remove) | list }}"
+
+- name: Remove extension(s) from disabled-extensions (write values)
+  ansible.builtin.command:
+    cmd: "dconf write /org/gnome/shell/disabled-extensions \"['{{ updated_values | join('\', \'') }}']\""
+
+- name: Add values to enabled-extensions (read values)
+  ansible.builtin.command:
+    cmd: "dconf read /org/gnome/shell/enabled-extensions"
+  register: current_values
+
+- name: Add values to enabled-extensions (add values)  
+  set_fact:
+    new_values: ['dash-to-dock@micxgx.gmail.com']
+    updated_values: "{{ (current_values.stdout.split('\n') | select('match', '.*') | list) + new_values }}"
+
+- name: Add values to enabled-extensions (write values)
+  ansible.builtin.command:
+    cmd: "dconf write /org/gnome/shell/enabled-extensions \"['{{ updated_values | join('\', \'') }}']\""
     
 - name: Configure GNOME
   become_user: jeevan

@@ -18,10 +18,11 @@
 
 - name: Get the current dconf array value
   dconf:
-    key: /org/gnome/desktop/interface/gtk-theme
+    key: /org/gnome/shell/enabled-extensions
     state: show
   register: current_themes
- - name: Process and use the dconf array value (for adding)
+
+- name: Process and use the dconf array value (for adding)
   set_fact:
     current_themes_list: "{{ current_themes.stdout | from_json }}"
     themes_to_actually_add: "{{ themes_to_add | difference(current_themes_list) }}"
@@ -29,15 +30,23 @@
 
 - name: Add the values to the dconf array (only if they are not already present)
   dconf:
-    key: /org/gnome/desktop/interface/gtk-theme
+    key: /org/gnome/shell/enabled-extensions
     value: "{{ item }}"
     array_append: yes
   loop: "{{ themes_to_actually_add }}"
   when: any_to_add_present
 
+################################
+
+- name: Get the current dconf array value
+  dconf:
+    key: /org/gnome/shell/diabled-extensions
+    state: show
+  register: current_themes_x
+
 - name: Process and use the dconf array value (for removing)
   set_fact:
-    current_themes_list: "{{ current_themes.stdout | from_json }}" # Get it again, since we modified the array
+    current_themes_list: "{{ current_themes_x.stdout | from_json }}" # Get it again, since we modified the array
     themes_actually_to_remove: "{{ current_themes_list | intersect(themes_to_remove) }}"
     any_to_remove_present: "{{ themes_actually_to_remove | length > 0 }}"
     updated_themes: "{{ current_themes_list | difference(themes_to_remove) }}"

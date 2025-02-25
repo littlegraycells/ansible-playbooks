@@ -44,11 +44,11 @@
   dconf:
     key: /org/gnome/shell/enabled-extensions
     state: show
-  register: enabled-extensions
+  register: enabled_extensions
 
 - name: Check which values are NOT already in the array
   set_fact:
-    themes_to_actually_add: "{{ new_extensions | difference(enabled-extensions.stdout | from_json) }}"
+    themes_to_actually_add: "{{ new_extensions | difference(enabled_extensions.stdout | from_json) }}"
 
 - name: Add the values to enabled-extensions (only if they are not already present)
   dconf:

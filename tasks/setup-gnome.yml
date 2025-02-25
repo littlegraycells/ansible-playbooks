@@ -29,11 +29,17 @@
     state: read
   register: current_themes
 
-- name: Process and use the dconf array value (for removal)
+- name: Process and use the dconf array value (for removal) 1
   set_fact:
     current_themes_list: "{{ current_themes.stdout | from_json }}"
+- name: Process and use the dconf array value (for removal) 2
+  set_fact:
     themes_actually_to_remove: "{{ current_themes_list | intersect(new_extensions) }}" # Find common elements
+- name: Process and use the dconf array value (for removal) 3
+  set_fact:
     any_to_remove_present: "{{ themes_actually_to_remove | length > 0 }}"
+- name: Process and use the dconf array value (for removal) 4
+  set_fact:
     updated_themes: "{{ current_themes_list | difference(themes_to_remove) }}" # Remove the values
 
 - name: Set the dconf array to the updated value (after removal)

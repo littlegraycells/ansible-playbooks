@@ -1,7 +1,9 @@
 - hosts: localhost
   connection: local
   become: true
-
+  vars_files:
+    - variables.yml
+    
   pre_tasks:
     - name: Update dnf cache
       dnf:

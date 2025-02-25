@@ -22,7 +22,7 @@
 - name: Read values from disabled-extensions
   dconf:
     key: /org/gnome/shell/disabled-extensions
-    state: show
+    state: read
   register: current_themes
 
 - name: Check if any of the new extensions  are present
@@ -43,7 +43,7 @@
 - name: Read values from enabled-extensions
   dconf:
     key: /org/gnome/shell/enabled-extensions
-    state: show
+    state: read
   register: enabled_extensions
 
 - name: Check which values are NOT already in the array

@@ -16,60 +16,41 @@
 
 ###############################################
 
-- name: Create list of extensions to be enabled
-  set_fact:
-    new_extensions:
-      - "dock-to-dash@micxgx.gmail.com"
-
-################## Disabled Extensions ##########
-
-- name: Read values from disabled-extensions
+- name: Get the current dconf array value
   dconf:
-    key: /org/gnome/shell/disabled-extensions
-    state: read
+    key: /org/gnome/desktop/interface/gtk-theme
+    state: show
   register: current_themes
-
-- name: Process and use the dconf array value (for removal) 1
+ - name: Process and use the dconf array value (for adding)
   set_fact:
     current_themes_list: "{{ current_themes.stdout | from_json }}"
-- name: Process and use the dconf array value (for removal) 2
-  set_fact:
-    themes_actually_to_remove: "{{ current_themes_list | intersect(new_extensions) }}" # Find common elements
-- name: Process and use the dconf array value (for removal) 3
-  set_fact:
-    any_to_remove_present: "{{ themes_actually_to_remove | length > 0 }}"
-- name: Process and use the dconf array value (for removal) 4
-  set_fact:
-    updated_themes: "{{ current_themes_list | difference(themes_to_remove) }}" # Remove the values
-
-- name: Set the dconf array to the updated value (after removal)
-  dconf:
-    key: /org/gnome/shell/disabled-extensions
-    value: "{{ updated_themes }}"
-    state: set
-  when: any_to_remove_present
-
-################# Enabled Extensions #################
-  
-- name: Read values from enabled-extensions
-  dconf:
-    key: /org/gnome/shell/enabled-extensions
-    state: read
-  register: enabled_extensions
-
-- name: Check which values are NOT already in the array
-  set_fact:
-    current_themes_list: "{{ enabled_extensions.stdout | from_json }}" # Convert JSON string to list
-    themes_to_actually_add: "{{ new_extensions | difference(current_themes_list) }}"
+    themes_to_actually_add: "{{ themes_to_add | difference(current_themes_list) }}"
     any_to_add_present: "{{ themes_to_actually_add | length > 0 }}"
 
-- name: Add the values to enabled-extensions (only if they are not already present)
+- name: Add the values to the dconf array (only if they are not already present)
   dconf:
-    key: /org/gnome/shell/enabled-extensions
+    key: /org/gnome/desktop/interface/gtk-theme
     value: "{{ item }}"
     array_append: yes
   loop: "{{ themes_to_actually_add }}"
   when: any_to_add_present
+
+- name: Process and use the dconf array value (for removing)
+  set_fact:
+    current_themes_list: "{{ current_themes.stdout | from_json }}" # Get it again, since we modified the array
+    themes_actually_to_remove: "{{ current_themes_list | intersect(themes_to_remove) }}"
+    any_to_remove_present: "{{ themes_actually_to_remove | length > 0 }}"
+    updated_themes: "{{ current_themes_list | difference(themes_to_remove) }}"
+
+- name: Set the dconf array to the updated value (after removal)
+  dconf:
+    key: /org/gnome/desktop/interface/gtk-theme
+    value: "{{ updated_themes }}"
+    state: set
+  when: any_to_remove_present
+      
+################## Disabled Extensions ##########
+
 
 - name: Configure GNOME
   become_user: jeevan

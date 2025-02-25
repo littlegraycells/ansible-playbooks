@@ -14,34 +14,50 @@
     name:
       - gnome-shell-extension-dash-to-dock
 
-- name: Remove extension(s) from disabled-extensions (read values)
-  ansible.builtin.command:
-    cmd: "dconf read /org/gnome/shell/disabled-extensions"
-  register: current_values
-
-- name: Remove extension(s) from disabled-extensions (remove values)
+- name: Create list of extensions to be enabled
   set_fact:
-    values_to_remove: ['dash-to-dock@micxgx.gmail.com']
-    updated_values: "{{ current_values.stdout.split('\n') | select('match', '.*') | list | selectattr('!', 'in', values_to_remove) | list }}"
+    new_extensions:
+      - "dock-to-dash@micxgx.gmail.com"
 
-- name: Remove extension(s) from disabled-extensions (write values)
-  ansible.builtin.command:
-    cmd: "dconf write /org/gnome/shell/disabled-extensions \"['{{ updated_values | join('\', \'') }}']\""
+- name: Read values from disabled-extensions
+  dconf:
+    key: /org/gnome/shell/disabled-extensions
+    state: show
+  register: current_themes
 
-- name: Add values to enabled-extensions (read values)
-  ansible.builtin.command:
-    cmd: "dconf read /org/gnome/shell/enabled-extensions"
-  register: current_values
-
-- name: Add values to enabled-extensions (add values)  
+- name: Check if any of the new extensions  are present
   set_fact:
-    new_values: ['dash-to-dock@micxgx.gmail.com']
-    updated_values: "{{ (current_values.stdout.split('\n') | select('match', '.*') | list) + new_values }}"
+    any_to_remove_present: "{{ (current_themes.stdout | from_json | intersect(new_extensions)) | length > 0 }}"
 
-- name: Add values to enabled-extensions (write values)
-  ansible.builtin.command:
-    cmd: "dconf write /org/gnome/shell/enabled-extensions \"['{{ updated_values | join('\', \'') }}']\""
-    
+- name: Remove the values from disabled-extensions
+  set_fact:
+    updated_themes: "{{ current_themes.stdout | from_json | difference(new_extensions) }}"
+  when: any_to_remove_present
+
+- name: Write updated values to disabled-extensions
+  dconf:
+    key: /org/gnome/shell/disabled-extensions
+    value: "{{ updated_themes }}"
+    state: set
+
+- name: Read values from enabled-extensions
+  dconf:
+    key: /org/gnome/shell/enabled-extensions
+    state: show
+  register: enabled-extensions
+
+- name: Check which values are NOT already in the array
+  set_fact:
+    themes_to_actually_add: "{{ new_extensions | difference(enabled-extensions.stdout | from_json) }}"
+
+- name: Add the values to enabled-extensions (only if they are not already present)
+  dconf:
+    key: /org/gnome/shell/enabled-extensions
+    value: "{{ item }}"
+    array_append: yes
+  loop: "{{ themes_to_actually_add }}"
+  when: themes_to_actually_add | length > 0
+
 - name: Configure GNOME
   become_user: jeevan
   dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"

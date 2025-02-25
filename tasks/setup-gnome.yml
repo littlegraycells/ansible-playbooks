@@ -14,10 +14,14 @@
     name:
       - gnome-shell-extension-dash-to-dock
 
+###############################################
+
 - name: Create list of extensions to be enabled
   set_fact:
     new_extensions:
       - "dock-to-dash@micxgx.gmail.com"
+
+################## Disabled Extensions ##########
 
 - name: Read values from disabled-extensions
   dconf:
@@ -25,25 +29,22 @@
     state: read
   register: current_themes
 
-- name: Check if any of the new extensions are present
+- name: Process and use the dconf array value (for removal)
   set_fact:
-#    any_to_remove_present: "{{ (current_themes.stdout | from_json | intersect(new_extensions)) | length > 0 }}"
     current_themes_list: "{{ current_themes.stdout | from_json }}"
-    themes_actually_to_remove: "{{ current_themes_list | intersect(new_extensions) }}"
+    themes_actually_to_remove: "{{ current_themes_list | intersect(new_extensions) }}" # Find common elements
     any_to_remove_present: "{{ themes_actually_to_remove | length > 0 }}"
+    updated_themes: "{{ current_themes_list | difference(themes_to_remove) }}" # Remove the values
 
-- name: Remove the values from disabled-extensions
-  set_fact:
-    updated_themes: "{{ current_themes_list | difference(new_extensions) }}"
-  when: any_to_remove_present
-
-- name: Write updated values to disabled-extensions
+- name: Set the dconf array to the updated value (after removal)
   dconf:
     key: /org/gnome/shell/disabled-extensions
     value: "{{ updated_themes }}"
     state: set
   when: any_to_remove_present
 
+################# Enabled Extensions #################
+  
 - name: Read values from enabled-extensions
   dconf:
     key: /org/gnome/shell/enabled-extensions
@@ -52,7 +53,6 @@
 
 - name: Check which values are NOT already in the array
   set_fact:
-#    themes_to_actually_add: "{{ new_extensions | difference(enabled_extensions.stdout | from_json) }}"
     current_themes_list: "{{ enabled_extensions.stdout | from_json }}" # Convert JSON string to list
     themes_to_actually_add: "{{ new_extensions | difference(current_themes_list) }}"
     any_to_add_present: "{{ themes_to_actually_add | length > 0 }}"

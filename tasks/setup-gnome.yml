@@ -19,7 +19,7 @@
 - name: Get the current dconf array value
   dconf:
     key: /org/gnome/shell/enabled-extensions
-    state: show
+    state: read
   register: current_themes
 
 - name: Process and use the dconf array value (for adding)
@@ -41,7 +41,7 @@
 - name: Get the current dconf array value
   dconf:
     key: /org/gnome/shell/diabled-extensions
-    state: show
+    state: read
   register: current_themes_x
 
 - name: Process and use the dconf array value (for removing)

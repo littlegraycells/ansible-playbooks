@@ -14,56 +14,26 @@
     name:
       - gnome-shell-extension-dash-to-dock
 
-###############################################
-
-- name: Get the current dconf array value
-  dconf:
-    key: /org/gnome/shell/enabled-extensions
-    state: read
-  register: current_themes
-
-- name: Process and use the dconf array value (for adding)
-  set_fact:
-    current_themes_list: "{{ current_themes.stdout | from_json }}"
-    themes_to_actually_add: "{{ themes_to_add | difference(current_themes_list) }}"
-    any_to_add_present: "{{ themes_to_actually_add | length > 0 }}"
-
-- name: Add the values to the dconf array (only if they are not already present)
-  dconf:
-    key: /org/gnome/shell/enabled-extensions
-    value: "{{ item }}"
-    array_append: yes
-  loop: "{{ themes_to_actually_add }}"
-  when: any_to_add_present
-
-################################
-
-- name: Get the current dconf array value
-  dconf:
-    key: /org/gnome/shell/diabled-extensions
-    state: read
-  register: current_themes_x
-
-- name: Process and use the dconf array value (for removing)
-  set_fact:
-    current_themes_list: "{{ current_themes_x.stdout | from_json }}" # Get it again, since we modified the array
-    themes_actually_to_remove: "{{ current_themes_list | intersect(themes_to_remove) }}"
-    any_to_remove_present: "{{ themes_actually_to_remove | length > 0 }}"
-    updated_themes: "{{ current_themes_list | difference(themes_to_remove) }}"
-
-- name: Set the dconf array to the updated value (after removal)
-  dconf:
-    key: /org/gnome/desktop/interface/gtk-theme
-    value: "{{ updated_themes }}"
-    state: set
-  when: any_to_remove_present
-      
-################## Disabled Extensions ##########
-
-
 - name: Configure GNOME
   become_user: jeevan
   dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"
   dconf: key="/org/gnome/desktop/peripherals/mouse/natural-scroll" value="true"
   dconf: key="/org/gnome/desktop/wm/preferences/button-layout" value="'appmenu:minimize,maximize,close'"
   dconf: key="/org/gnome/mutter/center-new-windows" value="true"
+
+  #### dash-to-dock config ####
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/dock-position" value="'LEFT'"
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/dock-fixed" value="true"
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/extend-height" value="true"
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink" value="true"
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/transparency-mode" value="'FIXED'"
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/background-opacity" value="0.8"
+  dconf: key="/org/gnome/shell/extensions/dash-to-dock/" value=""
+  
+
+
+
+
+
+
+  

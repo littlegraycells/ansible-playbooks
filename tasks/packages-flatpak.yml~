@@ -1,4 +1,0 @@
-- name: Install flatpak packages
-  community.general.flatpak:
-    name:
-      - eu.betterbird.Betterbird

@@ -15,7 +15,7 @@
       - gnome-shell-extension-dash-to-dock
 
 - name: Configure GNOME
-  become_user: jeevan
+  become_user: "{{ username }}"
   dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"
   dconf: key="/org/gnome/desktop/peripherals/mouse/natural-scroll" value="true"
   dconf: key="/org/gnome/desktop/wm/preferences/button-layout" value="'appmenu:minimize,maximize,close'"

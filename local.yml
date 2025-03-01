@@ -1,9 +1,7 @@
 - hosts: localhost
   connection: local
   become: true
-  vars_files:
-    - variables.yml
-    
+
   pre_tasks:
     - name: Update dnf cache
       dnf:
@@ -32,5 +30,6 @@
         file: tasks/packages-fedora.yml
         file: tasks/packages-flatpak.yml
         file: tasks/setup-gnome.yml
+        file: tasks/setup-userprefs.yml
 
 

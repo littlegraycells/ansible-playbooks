@@ -1,0 +1,5 @@
+---
+username: jeevan
+dotfiles:
+  - .emacs
+  - .gitconfig

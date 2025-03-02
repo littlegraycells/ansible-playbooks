@@ -1,0 +1,12 @@
+ - hosts: localhost
+   connection: local
+   become: true
+ 
+   tasks:
+   - name: install packages
+     package:
+       name:
+         - htop
+         - emacs-nox
+	 - vlc.x86_64
+	 - onlyoffice-desktopeditors

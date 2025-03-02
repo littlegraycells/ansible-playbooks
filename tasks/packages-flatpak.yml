@@ -1,6 +1,7 @@
 - name: Install flatpak packages
   community.general.flatpak:
     name:
+      - org.gnome.Extensions
       - eu.betterbird.Betterbird
       - org.onlyoffice.desktopeditors
       - com.github.muriloventuroso.pdftricks

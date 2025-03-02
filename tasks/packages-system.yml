@@ -1,0 +1,7 @@
+- name: Install system packages
+  package:
+    name:
+      - htop
+      - emacs-nox
+      - git
+

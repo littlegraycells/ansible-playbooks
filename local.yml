@@ -3,13 +3,13 @@
   become: true
 
   pre_tasks:
-    - name: Update dnf cache
-      dnf:
+    - name: Update package cache
+      package:
         update_cache: yes
       changed_when: False
 
-    - name: Install dnf package dependencies
-      dnf:
+    - name: Install package dependencies
+      package:
         name:
           - flatpak
           - python3-psutil
@@ -33,7 +33,7 @@
   tasks:
     - name: Install packages
       include_tasks:
-        file: tasks/packages-fedora.yml
+        file: tasks/packages-system.yml
         file: tasks/packages-flatpak.yml
         file: tasks/setup-gnome.yml
         file: tasks/setup-userprefs.yml

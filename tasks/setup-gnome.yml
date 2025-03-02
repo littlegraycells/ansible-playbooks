@@ -1,38 +1,43 @@
-- name: Install GNOME Tweaks app
-  package:
-    name:
-      - gnome-tweaks
+---
+- name: Install and configure GNOME extensions
+  include_role:
+    name: PeterMosmans.customize-gnome
+  vars:
+    gnome_user: "{{ username }}"
+    gnome_extensions:
+      - id: 307         # dash-to-dock
+        enable: "true"
+      - id: 1460        # vitals
+        enable: "true"
+    gnome_dconf:
+      - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
+        value: "true"
+      - key: /org/gnome/desktop/peripherals/mouse/natural-scroll
+        value: "true"
+      - key: /org/gnome/desktop/wm/preferences/button-layout
+        value: "'appmenu:minimize,maximize,close'"
+      - key: /org/gnome/mutter/center-new-windows
+        value: "true"
 
-- name: Install GNOME Extensions app
-  community.general.flatpak:
-    name:
-      - org.gnome.Extensions
-
-- name: Install Extensions
-  become: true
-  package:
-    name:
-      - gnome-shell-extension-dash-to-dock
-
-- name: Configure GNOME
-  become_user: "{{ username }}"
-  dconf: key="/org/gnome/desktop/peripherals/touchpad/tap-to-click" value="true"
-  dconf: key="/org/gnome/desktop/peripherals/mouse/natural-scroll" value="true"
-  dconf: key="/org/gnome/desktop/wm/preferences/button-layout" value="'appmenu:minimize,maximize,close'"
-  dconf: key="/org/gnome/mutter/center-new-windows" value="true"
-
-  #### dash-to-dock config ####
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/dock-position" value="'LEFT'"
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/dock-fixed" value="true"
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/extend-height" value="true"
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink" value="true"
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/transparency-mode" value="'FIXED'"
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/background-opacity" value="0.8"
-  dconf: key="/org/gnome/shell/extensions/dash-to-dock/" value=""
+        #### dash-to-dock config
+      - key: /org/gnome/shell/extensions/dash-to-dock/dock-position
+        value: "'LEFT'"
+      - key: /org/gnome/shell/extensions/dash-to-dock/dock-fixed
+        value: "true"
+      - key: /org/gnome/shell/extensions/dash-to-dock/extend-height
+        value: "true"
+      - key: /org/gnome/shell/extensions/dash-to-dock/custom-theme-shrink
+        value: "true"
+      - key: /org/gnome/shell/extensions/dash-to-dock/transparency-mode
+        value: "'FIXED'"
+      - key: /org/gnome/shell/extensions/dash-to-dock/background-opacity
+        value: "0.8"
   
-  #### vitals config ####
-  dconf: key="/org/gnome/shell/extensions/vitals/hot-sensors" value="['_processor_usage_', '_memory_usage_', '__temperature_avg__', '_system_load_5m_']"
-  dconf: key="/org/gnome/shell/extensions/vitals/position-in-panel" value="1"
+        #### vitals config
+      - key: /org/gnome/shell/extensions/vitals/hot-sensors
+        value: "['_processor_usage_', '_memory_usage_', '__temperature_avg__', '_system_load_5m_']"
+      - key: /org/gnome/shell/extensions/vitals/position-in-panel
+        value: "1"
  
 
 

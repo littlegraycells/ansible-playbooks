@@ -32,26 +32,12 @@
 
   tasks:
     - name: Install packages
-      include_tasks:
-        file: tasks/packages-system.yml
-        file: tasks/packages-flatpak.yml
-        file: tasks/setup-gnome.yml
-        file: tasks/setup-userprefs.yml
-
-    - name: Install Gnome extensions
-      include_role:
-        name: PeterMosmans.customize-gnome
-      vars:
-        gnome_user: "{{ username }}"
-        gnome_extensions:
-          - id: 307         # dash-to-dock
-            enable: true
-          - id: 1460        # vitals
-            enable: true
-
-    - name: Configure GNOME
-      include_tasks:
-        file: tasks/setup-gnome.yml
-
-
+      include_tasks: "{{ task }}"
+      loop_control:
+        loop_var: task
+      loop:
+        - tasks/packages-system.yml
+        - tasks/packages-flatpak.yml
+        - tasks/setup-userprefs.yml
+        - tasks/setup-gnome.yml		### Must come last because this will trigger a logout
 

@@ -30,7 +30,10 @@
   dconf: key="/org/gnome/shell/extensions/dash-to-dock/background-opacity" value="0.8"
   dconf: key="/org/gnome/shell/extensions/dash-to-dock/" value=""
   
-
+  #### vitals config ####
+  dconf: key="/org/gnome/shell/extensions/vitals/hot-sensors" value="['_processor_usage_', '_memory_usage_', '__temperature_avg__', '_system_load_5m_']"
+  dconf: key="/org/gnome/shell/extensions/vitals/position-in-panel" value="1"
+ 
 
 
 

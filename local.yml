@@ -16,6 +16,7 @@
           - dconf
           - dbus-tools
           - dbus-daemon
+          - unzip
 
     - name: Add the flathub flatpak repository remote to the user installation
       community.general.flatpak_remote:
@@ -24,6 +25,11 @@
         flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
         method: user
 
+    - name: Install requirements
+      command:
+        cmd: ansible-galaxy install -r requirements.yml
+      register: cmdresults
+
   tasks:
     - name: Install packages
       include_tasks:
@@ -31,5 +37,21 @@
         file: tasks/packages-flatpak.yml
         file: tasks/setup-gnome.yml
         file: tasks/setup-userprefs.yml
+
+    - name: Install Gnome extensions
+      include_role:
+        name: PeterMosmans.customize-gnome
+      vars:
+        gnome_user: "{{ username }}"
+        gnome_extensions:
+          - id: 307         # dash-to-dock
+            enable: true
+          - id: 1460        # vitals
+            enable: true
+
+    - name: Configure GNOME
+      include_tasks:
+        file: tasks/setup-gnome.yml
+
 
 

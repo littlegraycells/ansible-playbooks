@@ -12,7 +12,7 @@
     gnome_gsettings:
       - schema: org.gnome.mutter
         key: experimental-features
-        value: "['scale-monitor-framebuffer']"
+        value: ['scale-monitor-framebuffer']
     gnome_dconf:
       - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
         value: "true"

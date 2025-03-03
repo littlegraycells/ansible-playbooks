@@ -10,9 +10,9 @@
       - id: 1460        # vitals
         enable: "true"
     gnome_gsettings:
-      - schema: org.gnome.mutter
-        key: experimental-features
-        value: ['scale-monitor-framebuffer']
+      - schema: org.gnome.desktop.interface
+        key: enable-fractional-scaling
+        value: "true"
     gnome_dconf:
       - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
         value: "true"

@@ -9,10 +9,6 @@
         enable: "true"
       - id: 1460        # vitals
         enable: "true"
-    gnome_gsettings:
-      - schema: org.gnome.desktop.interface
-        key: enable-fractional-scaling
-        value: "true"
     gnome_dconf:
       - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
         value: "true"
@@ -20,8 +16,10 @@
         value: "true"
       - key: /org/gnome/desktop/wm/preferences/button-layout
         value: "'appmenu:minimize,maximize,close'"
-      - key: /org/gnome/mutter/center-new-windows
+       - key: /org/gnome/mutter/center-new-windows
         value: "true"
+      - key: /org/gnome/mutter/experimental-features
+        value: "['scale-monitor-framebuffer']"
 
         #### dash-to-dock config
       - key: /org/gnome/shell/extensions/dash-to-dock/dock-position

@@ -16,7 +16,7 @@
         value: "true"
       - key: /org/gnome/desktop/wm/preferences/button-layout
         value: "'appmenu:minimize,maximize,close'"
-       - key: /org/gnome/mutter/center-new-windows
+      - key: /org/gnome/mutter/center-new-windows
         value: "true"
       - key: /org/gnome/mutter/experimental-features
         value: "['scale-monitor-framebuffer']"

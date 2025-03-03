@@ -9,6 +9,10 @@
         enable: "true"
       - id: 1460        # vitals
         enable: "true"
+    gnome_gsettings:
+      - schema: org.gnome.mutter
+        key: experimental-features
+        value: "['scale-monitor-framebuffer']"
     gnome_dconf:
       - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
         value: "true"

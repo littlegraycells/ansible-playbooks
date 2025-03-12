@@ -9,4 +9,5 @@
       - io.github.ungoogled_software.ungoogled_chromium
       - com.ultimaker.cura
       - org.nicotine_plus.Nicotine
+      - flathub org.videolan.VLC
     state: present

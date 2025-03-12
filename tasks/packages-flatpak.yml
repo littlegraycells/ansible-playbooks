@@ -8,4 +8,5 @@
       - com.vscodium.codium
       - io.github.ungoogled_software.ungoogled_chromium
       - com.ultimaker.cura
+      - org.nicotine_plus.Nicotine
     state: present

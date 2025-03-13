@@ -10,4 +10,5 @@
       - com.ultimaker.cura
       - org.nicotine_plus.Nicotine
       - org.videolan.VLC
+      - com.ktechpit.whatsie
     state: present

@@ -11,4 +11,5 @@
       - org.nicotine_plus.Nicotine
       - org.videolan.VLC
       - com.ktechpit.whatsie
+      - org.gnome.World.Iotas
     state: present

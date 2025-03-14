@@ -21,7 +21,7 @@
       - key: /org/gnome/mutter/experimental-features
         value: "['scale-monitor-framebuffer']"
       - key: /org/gnome/shell/favorite-apps
-        value: "['org.gnome.Nautilus.desktop', 'eu.betterbird.Betterbird.desktop', 'com.ktechpit.whatsie.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.Ptyxis.desktop', 'org.gnome.Software.desktop', 'org.onlyoffice.desktopeditors.desktop', 'com.ultimaker.cura.desktop', 'com.vscodium.codium.desktop', 'org.nicotine_plus.Nicotine.desktop']"
+        value: "['org.gnome.Nautilus.desktop', 'eu.betterbird.Betterbird.desktop', 'com.ktechpit.whatsie.desktop', 'org.mozilla.firefox.desktop', 'org.gnome.World.Iotas.desktop', 'org.gnome.Ptyxis.desktop', 'org.gnome.Software.desktop', 'org.onlyoffice.desktopeditors.desktop', 'com.ultimaker.cura.desktop', 'com.vscodium.codium.desktop', 'org.nicotine_plus.Nicotine.desktop']"
 
         #### dash-to-dock config
       - key: /org/gnome/shell/extensions/dash-to-dock/dock-position

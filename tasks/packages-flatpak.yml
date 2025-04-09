@@ -12,4 +12,5 @@
       - org.videolan.VLC
       - com.rtosta.zapzap
       - org.gnome.World.Iotas
+      - com.calibre_ebook.calibre
     state: present

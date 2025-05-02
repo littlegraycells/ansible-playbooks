@@ -21,5 +21,10 @@ Ansible playbook with some basic workstation setup. Tested with Fedora, Ubuntu b
 1. Run `ansible-pull`
 
    ```
-   sudo ansible-pull -U https://github.com/littlegraycells/ansible-playbooks.git
+   sudo ansible-pull -U https://github.com/littlegraycells/ansible-playbooks.git -C main
+   ```
+
+   By default, this will also include developer tooling. To skip it run
+   ```
+   sudo ansible-pull -U https://github.com/littlegraycells/ansible-playbooks.git -C main -e '{ setup_dev: false }'
    ```

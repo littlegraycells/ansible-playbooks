@@ -1,6 +1,8 @@
 - hosts: localhost
   connection: local
   become: true
+  vars:
+    setup_dev: true
 
   pre_tasks:
     - name: Update package cache
@@ -40,5 +42,13 @@
         - tasks/packages-system.yml
         - tasks/packages-flatpak.yml
         - tasks/setup-userprefs.yml
-        - tasks/setup-gnome.yml		### Must come last because this will trigger a logout
 
+    - name: Setup dev environment
+      ansible.builtin.include_tasks:
+        file: tasks/packages-dev.yml
+      when: setup_dev
+
+      ### Must come last because this will trigger a logout
+#    - name: Setup GNOME              
+#      ansible.builtin.include_tasks:
+#        file: tasks/setup-gnome.yml		

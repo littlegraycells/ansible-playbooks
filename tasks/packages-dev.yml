@@ -1,0 +1,43 @@
+- name: Install Flutter and dependencies
+  package:
+    name:
+      - curl
+      - git
+      - unzip
+      - xz
+      - zip
+      - mesa-libGLU
+      - glibc-devel
+      - libstdc++.so.6
+      - zlib*
+      - libbz2.so.1
+      - libstdc++.i686
+    state: present
+
+- name: Install dev software
+  community.general.flatpak:
+    name:
+      - com.google.AndroidStudio
+    state: present
+
+- name: Install VSCodium
+  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
+  ansible.builtin.dnf:
+    name: "https://github.com/VSCodium/vscodium/releases/download/1.99.32846/codium-1.99.32846-el8.x86_64.rpm"
+    disable_gpg_check: true
+    state: present
+
+- name: Install VSCodium
+  when: ansible_pkg_mgr == "apt"
+  ansible.builtin.apt:
+    deb: "https://github.com/VSCodium/vscodium/releases/download/1.99.32846/codium_1.99.32846_amd64.deb"
+    allow_unauthenticated: true
+    state: present
+
+- name: Install VSCodium extensions
+  become_user: "{{ username }}"
+  ansible.builtin.command: "{{ cmd }}"
+  loop_control:
+    loop_var: cmd
+  loop:
+    - codium --install-extension redhat.ansible

@@ -41,3 +41,4 @@
     loop_var: cmd
   loop:
     - codium --install-extension redhat.ansible
+    - codium --install-extension Dart-Code.flutter

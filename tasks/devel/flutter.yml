@@ -1,0 +1,22 @@
+---
+- name: Install Flutter and dependencies
+  package:
+    name:
+      - curl
+      - git
+      - unzip
+      - xz
+      - zip
+      - mesa-libGLU
+      - glibc-devel
+      - libstdc++.so.6
+      - zlib*
+      - libbz2.so.1
+      - libstdc++.i686
+    state: present
+
+- name: Install android studio
+  community.general.flatpak:
+    name:
+      - com.google.AndroidStudio
+    state: present

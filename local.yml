@@ -1,8 +1,10 @@
+---
 - hosts: localhost
   connection: local
   become: true
   vars:
-    setup_dev: true
+    devel: true
+    devel_flutter: false
 
   pre_tasks:
     - name: Update package cache
@@ -35,7 +37,7 @@
 
   tasks:
     - name: Install packages
-      include_tasks: "{{ task }}"
+      ansible.builtin.include_tasks: "{{ task }}"
       loop_control:
         loop_var: task
       loop:
@@ -43,12 +45,12 @@
         - tasks/packages-flatpak.yml
         - tasks/setup-userprefs.yml
 
-    - name: Setup dev environment
+    - name: Setup dev tooling
       ansible.builtin.include_tasks:
-        file: tasks/packages-dev.yml
-      when: setup_dev
+        file: tasks/setup-devel.yml
+      when: devel
 
       ### Must come last because this will trigger a logout
-#    - name: Setup GNOME              
-#      ansible.builtin.include_tasks:
-#        file: tasks/setup-gnome.yml		
+    - name: Setup GNOME              
+      ansible.builtin.include_tasks:
+        file: tasks/setup-gnome.yml		

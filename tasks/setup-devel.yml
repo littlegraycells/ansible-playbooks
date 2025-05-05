@@ -15,6 +15,7 @@
     loop_var: cmd
   loop:
     - usermod -aG incus-admin "{{ username }}"
+    - incus admin init --minimal
     - systemctl enable incus
 
 ### Optional packages

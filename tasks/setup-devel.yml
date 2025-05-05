@@ -4,6 +4,7 @@
     name:
       - incus
       - incus-ui-canonical
+      - dpkg
 
 - name: Install VSCodium
   ansible.builtin.include_tasks:

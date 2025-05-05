@@ -17,7 +17,7 @@
     - usermod -aG incus-admin "{{ username }}"
     - systemctl start incus
     - systemctl enable incus
-    - incus admin init --minimal
+    - incus admin init --minimal           ## incus must be started before this
 
 ### Optional packages
 - name: Install Flutter and dependencies

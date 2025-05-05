@@ -15,7 +15,8 @@
     loop_var: cmd
   loop:
     - usermod -aG incus-admin "{{ username }}"
-    
+    - systemctl enable incus
+
 ### Optional packages
 - name: Install Flutter and dependencies
   ansible.builtin.include_tasks:

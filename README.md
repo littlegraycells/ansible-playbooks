@@ -24,13 +24,14 @@ Ansible playbook for Fedora workstation. Tested with Fedora but `apt` based dist
    sudo ansible-pull -U https://github.com/littlegraycells/ansible-playbooks.git -C main
    ```
 
-2. (optional) By default, this will also include developer tooling. To skip it pass `devel: false`
+1. (optional) By default, this will also include developer tooling. To skip it pass `devel: false`
    ```
    sudo ansible-pull -U https://github.com/littlegraycells/ansible-playbooks.git -C main -e '{ devel: false }'
    ```
-3. Additioanl options
+1. Additioanl options
    ```
    {
 	devel: true,		// Install dev tooling. Defaults to true
 	devel-flutter: false	// Installs flutter tooling. Defaults to false
    }
+1. (optional) Follow [instructions](https://discuss.linuxcontainers.org/t/tutorial-installing-the-web-ui-for-incus-on-fedora-or-other-redhat-based-distros/20986/1) for setting up a Web GUI for Incus.

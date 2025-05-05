@@ -3,6 +3,7 @@
   ansible.builtin.package:
     name:
       - incus
+      - incus-ui-canonical
 
 - name: Install VSCodium
   ansible.builtin.include_tasks:
@@ -18,6 +19,7 @@
     - systemctl start incus
     - systemctl enable incus
     - incus admin init --minimal           ## incus must be started before this
+    - 
 
 ### Optional packages
 - name: Install Flutter and dependencies

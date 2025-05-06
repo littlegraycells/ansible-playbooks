@@ -24,9 +24,21 @@
     - systemctl start incus
     - systemctl enable incus
     - incus admin init --minimal           ## incus must be started before this
-    - echo -e "\nroot:1000000:1000000000\n" | tee -a /etc/subuid       ## needed for incus
-    - echo -e "\nroot:1000000:1000000000\n" | tee -a /etc/subuid       ## needed for incus
+#    - echo -e "\nroot:1000000:1000000000\n" | tee -a /etc/subuid       ## needed for incus
+#    - echo -e "\nroot:1000000:1000000000\n" | tee -a /etc/subgid       ## needed for incus
 
+- name: Additional setup
+  become: true
+  loop_control:
+    loop_var: "path"
+  loop:
+    - /etc/subuid
+    - /etc/subgid
+  ansible.builtin.lineinfile:
+    path: "{{ path }}"
+    state: present
+    line: "root:1000000:1000000000"
+      
 ### Optional packages
 - name: Install Flutter and dependencies
   ansible.builtin.include_tasks:

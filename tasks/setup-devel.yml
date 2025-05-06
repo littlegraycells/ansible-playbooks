@@ -6,6 +6,11 @@
       - incus-ui-canonical
       - dpkg
 
+- name: Install Flatpak Apps
+  community.general.flatpak:
+    name:
+      - com.usebruno.Bruno
+      
 - name: Install VSCodium
   ansible.builtin.include_tasks:
     file: devel/codium.yml

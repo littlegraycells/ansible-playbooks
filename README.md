@@ -28,7 +28,7 @@ Ansible playbook for Fedora workstation. Tested with Fedora but `apt` based dist
    ```
    sudo ansible-pull -U https://github.com/littlegraycells/ansible-playbooks.git -C main -e '{ devel: false }'
    ```
-1. Additioanl options
+1. Additional options
    ```
    {
 	devel: true,		// Install dev tooling. Defaults to true

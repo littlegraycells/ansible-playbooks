@@ -5,6 +5,7 @@
   vars:
     devel: true
     devel_flutter: false
+    kill_gnome: false
 
   pre_tasks:
     - name: Update package cache
@@ -54,3 +55,13 @@
     - name: Setup GNOME              
       ansible.builtin.include_tasks:
         file: tasks/setup-gnome.yml		
+
+    - name: Reboot message
+      when: "{{ not kill_gnome|bool }}"
+      ansible.builtin.debug:
+        msg: "To apply any GNOME changes, either reboot the system or kill gnome using 'sudo killall -3 gnome-shell'"
+
+
+
+
+          

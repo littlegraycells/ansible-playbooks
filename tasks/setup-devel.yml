@@ -24,6 +24,8 @@
     - systemctl start incus
     - systemctl enable incus
     - incus admin init --minimal           ## incus must be started before this
+    - echo -e "\nroot:1000000:1000000000\n" | tee -a /etc/subuid       ## needed for incus
+    - echo -e "\nroot:1000000:1000000000\n" | tee -a /etc/subuid       ## needed for incus
 
 ### Optional packages
 - name: Install Flutter and dependencies

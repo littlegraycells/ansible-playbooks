@@ -3,7 +3,6 @@
   ansible.builtin.package:
     name:
       - incus
-      - incus-ui-canonical
       - dpkg
 
 - name: Install Flatpak Apps

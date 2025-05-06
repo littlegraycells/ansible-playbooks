@@ -3,6 +3,7 @@
   include_role:
     name: PeterMosmans.customize-gnome
   vars:
+    customize_gnome__skip_restart_gnome_shell: "{{ not kill_gnome|bool }}"
     gnome_user: "{{ username }}"
     gnome_extensions:
       - id: 307         # dash-to-dock

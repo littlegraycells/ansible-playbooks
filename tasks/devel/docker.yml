@@ -62,15 +62,8 @@
     groups: docker
     append: true
 
-- name: Setup docker
-  become: true
-  ansible.builtin.command: "{{ cmd }}"
-  loop_control:
-    loop_var: cmd
-  loop:
-    - systemctl enable docker
-    - systemctl start docker
-
-- name: Refresh docker group
-  become_user: "{{ username }}"
-  ansible.builtin.command: newgrp docker
+- name: Setup docker daemon
+  ansible.builtin.systemd_service:
+    state: started
+    enabled: true
+    name: docker

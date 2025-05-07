@@ -1,12 +1,12 @@
 ---
   ## Install for Fedora
-#- name: Install docker dependencies
-#  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
-#  ansible.builtin.dnf:
-#    name:
-#      - dnf-plugins-core
-#    disable_gpg_check: true
-#    state: present
+- name: Install docker dependencies
+  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
+  ansible.builtin.dnf:
+    name:
+      - dnf-plugins-core
+    disable_gpg_check: true
+    state: present
 
 - name: Enable docker repo
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"

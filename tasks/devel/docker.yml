@@ -32,4 +32,5 @@
     - systemctl enable docker
     - systemctl start docker
     - usermod -aG docker "{{ username }}"
+    - newgrp docker
 

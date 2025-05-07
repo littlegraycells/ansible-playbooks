@@ -70,4 +70,7 @@
   loop:
     - systemctl enable docker
     - systemctl start docker
-    - newgrp docker
+
+- name: Refresh docker group
+  become_user: "{{ username }}"
+  ansible.builtin.command: newgrp docker

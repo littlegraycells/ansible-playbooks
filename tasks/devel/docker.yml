@@ -31,6 +31,14 @@
   loop:
     - systemctl enable docker
     - systemctl start docker
-    - usermod -aG docker "{{ username }}"
-    - newgrp docker
+#    - usermod -aG docker "{{ username }}"
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups: docker
+    append: true
+
+- name: Reset connection to udpdate user group membership
+  meta: reset_connection
 

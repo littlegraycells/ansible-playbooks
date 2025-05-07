@@ -1,18 +1,17 @@
 ---
   ## Install for Fedora
-- name: Install docker dependencies
-  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
-  ansible.builtin.dnf:
-    name:
-      - dnf-plugins-core
-    disable_gpg_check: true
-    state: present
+#- name: Install docker dependencies
+#  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
+#  ansible.builtin.dnf:
+#    name:
+#      - dnf-plugins-core
+#    disable_gpg_check: true
+#    state: present
 
 - name: Enable docker repo
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
-  community.general.dnf_config_manager:
-    name: https://download.docker.com/linux/fedora/docker-ce.repo
-    state: enabled
+  become: true
+  ansible.builtin.command: dnf config-manager addrepo https://download.docker.com/linux/fedora/docker-ce.repo
 
 - name: Install docker-ce
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"

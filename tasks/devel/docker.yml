@@ -1,0 +1,41 @@
+---
+  ## Install for Fedora
+#- name: Install docker dependencies
+#  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
+#  ansible.builtin.dnf:
+#    name:
+#      - dnf-plugins-core
+#    disable_gpg_check: true
+#    state: present
+
+- name: Enable docker repo
+  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
+  community.general.dnf_config_manager:
+    name: https://download.docker.com/linux/fedora/docker-ce.repo
+    state: enabled
+
+- name: Install docker-ce
+  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
+  ansible.builtin.dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    
+  ## Install for Debian/Ubuntu
+- name: Install VSCodium
+  when: ansible_pkg_mgr == "apt"
+  ansible.builtin.apt:
+    deb: "https://github.com/VSCodium/vscodium/releases/download/1.99.32846/codium_1.99.32846_amd64.deb"
+    allow_unauthenticated: true
+    state: present
+
+- name: Enable and start docker
+  become: true
+  ansible.builtin.command: systemctl enable docker && systemctl start docker
+
+- name: Add user to docker group
+  become: true
+  ansible.builtin.command: usermod -aG docker "{{ username }}"

@@ -1,13 +1,5 @@
 ---
   ## Install for Fedora
-#- name: Install docker dependencies
-#  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
-#  ansible.builtin.dnf:
-#    name:
-#      - dnf-plugins-core
-#    disable_gpg_check: true
-#    state: present
-
 - name: Enable docker repo
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
   become: true
@@ -31,10 +23,13 @@
     allow_unauthenticated: true
     state: present
 
-- name: Enable and start docker
+- name: Setup docker
   become: true
-  ansible.builtin.command: systemctl enable docker && systemctl start docker
+  ansible.builtin.command: "{{ cmd }}"
+  loop_control:
+    loop_var: cmd
+  loop:
+    - systemctl enable docker
+    - systemctl start docker
+    - usermod -aG docker "{{ username }}"
 
-- name: Add user to docker group
-  become: true
-  ansible.builtin.command: usermod -aG docker "{{ username }}"

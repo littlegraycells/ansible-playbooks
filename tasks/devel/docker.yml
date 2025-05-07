@@ -11,7 +11,7 @@
 - name: Enable docker repo
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
   become: true
-  ansible.builtin.command: dnf config-manager addrepo https://download.docker.com/linux/fedora/docker-ce.repo
+  ansible.builtin.command: dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 
 - name: Install docker-ce
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"

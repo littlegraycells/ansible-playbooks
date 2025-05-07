@@ -17,7 +17,7 @@
           - docker-selinux
           - docker-engine-selinux
           - docker-engine
-          state: absent
+        state: absent
 
     - name: Enable docker repo
       become: true

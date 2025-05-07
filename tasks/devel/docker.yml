@@ -1,27 +1,76 @@
 ---
   ## Install for Fedora
-- name: Enable docker repo
+- name: Install and configure docker
   when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
-  become: true
-  ansible.builtin.command: dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  block:
+    - name: Remove old docker packages
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - docker
+          - docker-client
+          - docker-client-latest
+          - docker-common
+          - docker-latest
+          - docker-latest-logrotate
+          - docker-logrotate
+          - docker-selinux
+          - docker-engine-selinux
+          - docker-engine
+          state: absent
 
-- name: Install docker-ce
-  when: ansible_pkg_mgr == "dnf5" or ansible_pkg_mgr == "dnf"
-  ansible.builtin.dnf:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-    
-  ## Install for Debian/Ubuntu
-- name: Install VSCodium
+    - name: Enable docker repo
+      become: true
+      ansible.builtin.command: dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+    - name: Install docker-ce
+      ansible.builtin.dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+  
+## Install for Debian/Ubuntu
+- name: Install and configure docker
   when: ansible_pkg_mgr == "apt"
-  ansible.builtin.apt:
-    deb: "https://github.com/VSCodium/vscodium/releases/download/1.99.32846/codium_1.99.32846_amd64.deb"
-    allow_unauthenticated: true
-    state: present
+  block:
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce and docker-compose
+      apt:
+        pkg:
+          - docker-ce
+          - docker-compose
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
 
 - name: Setup docker
   become: true
@@ -31,7 +80,6 @@
   loop:
     - systemctl enable docker
     - systemctl start docker
-#    - usermod -aG docker "{{ username }}"
 
 - name: Add user to docker group
   ansible.builtin.user:

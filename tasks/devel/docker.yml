@@ -64,6 +64,6 @@
 
 - name: Setup docker daemon
   ansible.builtin.systemd_service:
-    state: started
+    state: restarted
     enabled: true
     name: docker

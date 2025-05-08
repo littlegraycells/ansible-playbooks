@@ -1,6 +1,6 @@
 # Ansible playbook for GNOME workstation setup
 
-Ansible playbook for Fedora workstation. Tested with Fedora but `apt` based distros like Ubuntu or Debian should also work. GNOME (wayland) only.
+Ansible playbook for Fedora workstation. Tested on Fedora 41 but `apt` based distros like Ubuntu or Debian _should_ also work. GNOME (wayland) only.
 
 #### Steps
 1. Ensure git and ansible are installed.

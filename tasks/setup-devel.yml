@@ -4,6 +4,7 @@
     name:
       - incus
       - dpkg
+      - golang
 
 - name: Install Flatpak Apps
   community.general.flatpak:

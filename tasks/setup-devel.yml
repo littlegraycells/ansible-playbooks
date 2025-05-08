@@ -5,6 +5,7 @@
       - incus
       - dpkg
       - golang
+      - virt-viewer
 
 - name: Install Flatpak Apps
   community.general.flatpak:

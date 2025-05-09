@@ -4,6 +4,7 @@
     name:
       - gnome-tweaks
       - htop
+      - glances
       - emacs-nox
       - git
       - gparted

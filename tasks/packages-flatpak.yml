@@ -13,4 +13,5 @@
       - org.gnome.World.Iotas
       - com.calibre_ebook.calibre
       - org.nickvision.tubeconverter
+      - io.missioncenter.MissionCenter
     state: present

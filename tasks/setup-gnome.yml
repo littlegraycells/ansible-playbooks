@@ -12,6 +12,8 @@
         enable: "true"
       - id: 1319        # gsconnect
         enable: "true"
+      - id: 7065        # tiling-shell
+        enable: "true"
     gnome_dconf:
       - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
         value: "true"

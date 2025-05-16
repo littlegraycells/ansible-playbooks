@@ -1,7 +1,7 @@
 ---
 - name: Set Android Studio install facts
   set_fact:
-    android_sdk_path: "/home/{{ username }}/Code/Android/Sdk"
+    android_sdk_path: "/home/{{ username }}/Android/Sdk"
     shell_profile: "/home/{{ username }}/.bashrc"
   
 - name: Install Android Studio

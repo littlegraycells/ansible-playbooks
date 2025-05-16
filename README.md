@@ -33,6 +33,7 @@ Ansible playbook for Fedora workstation. Tested on Fedora 41 but `apt` based dis
    {
 	devel: true,		// Install dev tooling. Defaults to true
 	devel-flutter: false,	// Installs flutter tooling. Defaults to false
+	devel-android: true,	// Installs Android Studio. Defaults to true
 	kill_gnome: true	// Kills the GNOME session at the end to apply GNOME changes. Defaults to false
    }
 1. (optional) Follow [instructions](https://discuss.linuxcontainers.org/t/tutorial-installing-the-web-ui-for-incus-on-fedora-or-other-redhat-based-distros/20986/1) for setting up a Web GUI for Incus.

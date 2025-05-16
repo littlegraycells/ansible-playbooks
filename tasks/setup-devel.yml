@@ -1,4 +1,10 @@
 ---
+- name: Create Code directory
+  ansible.builtin.file:
+    path: "/home/{{ username }}/Code"
+    state: directory
+    mode: '0755'
+
 - name: Install Core Tools
   ansible.builtin.package:
     name:
@@ -44,18 +50,12 @@
     line: "root:1000000:1000000000"
       
 ### Optional packages
-#- name: Ensure destination directory exists
-#  ansible.builtin.file:
-#    path: "/home/{{ username }}/Documents/code/android-studio"
-#    state: directory
-#    mode: '0755'
-    
 - name: Install Android Studio
+  become_user: "{{ username }}"
   ansible.builtin.unarchive:
     src: https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.3.2.14/android-studio-2024.3.2.14-linux.tar.gz
-    dest: "/home/{{ username }}/Documents/code/"
+    dest: "/home/{{ username }}/Code/"
     remote_src: yes
-
 
 - name: Install Flutter and dependencies
   ansible.builtin.include_tasks:

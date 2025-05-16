@@ -48,6 +48,7 @@
   ansible.builtin.unarchive:
     src: https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.3.2.14/android-studio-2024.3.2.14-linux.tar.gz
     dest: "/home/{{ username }}/Documents/code/android-studio"
+    creates: "/home/{{ username }}/Documents/code"
     remote_src: yes
 
 

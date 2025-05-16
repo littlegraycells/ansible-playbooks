@@ -44,6 +44,13 @@
     line: "root:1000000:1000000000"
       
 ### Optional packages
+- name: Install Android Studio
+  ansible.builtin.unarchive:
+    src: https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.3.2.14/android-studio-2024.3.2.14-linux.tar.gz
+    dest: /home/"{{ username }}"/Documents/code/android-studio
+    remote_src: yes
+
+
 - name: Install Flutter and dependencies
   ansible.builtin.include_tasks:
     file: devel/flutter.yml

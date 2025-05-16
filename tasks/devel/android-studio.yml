@@ -7,7 +7,6 @@
     remote_src: yes
     
 - name: Configure ANDROID_HOME environment variable
-  hosts: all
   become_user: "{{ username }}"
   vars:
     android_sdk_path: "/home/{{ username }}/Code/Android/Sdk"

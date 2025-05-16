@@ -1,0 +1,28 @@
+---
+- name: Install Android Studio
+  become_user: "{{ username }}"
+  ansible.builtin.unarchive:
+    src: https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2024.3.2.14/android-studio-2024.3.2.14-linux.tar.gz
+    dest: "/home/{{ username }}/Code/"
+    remote_src: yes
+    
+- name: Configure ANDROID_HOME environment variable
+  hosts: all
+  become_user: "{{ username }}"
+  vars:
+    android_sdk_path: "/home/{{ username }}/Code/Android/Sdk"
+    shell_profile: "/home/{{ username }}/.bashrc"
+
+- name: Ensure ANDROID_HOME is set in .bashrc
+  lineinfile:
+    path: "{{ shell_profile }}"
+    line: 'export ANDROID_HOME={{ android_sdk_path }}'
+    insertafter: EOF
+    state: present
+
+- name: Add Android SDK tools to PATH in .bashrc
+  lineinfile:
+    path: "{{ shell_profile }}"
+    line: 'export PATH=$PATH:{{ android_sdk_path }}/emulator:{{ android_sdk_path }}/tools:{{ android_sdk_path }}/tools/bin:{{ android_sdk_path }}/platform-tools'
+    insertafter: EOF
+    state: present

@@ -5,6 +5,7 @@
   vars:
     devel: true
     devel_flutter: false
+    devel_android: true
     kill_gnome: false
 
   pre_tasks:

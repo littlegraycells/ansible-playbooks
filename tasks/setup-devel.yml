@@ -12,6 +12,7 @@
       - dpkg
       - golang
       - virt-viewer
+      - nodejs
 
 - name: Install Flatpak Apps
   community.general.flatpak:

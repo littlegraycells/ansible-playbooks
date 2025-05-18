@@ -13,7 +13,7 @@
       - golang
       - virt-viewer
       - nodejs
-      - java-latest-openjdk
+      - java-21-openjdk
 
 - name: Install Flatpak Apps
   community.general.flatpak:

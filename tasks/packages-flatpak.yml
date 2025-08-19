@@ -15,4 +15,6 @@
       - org.nickvision.tubeconverter
       - io.missioncenter.MissionCenter
       - io.github.giantpinkrobots.varia
+      - net.cozic.joplin_desktop
+      - org.freecad.FreeCAD
     state: present
